@@ -9,7 +9,6 @@ while True:
     init_response = requests.get("https://leetcode-stats-api.herokuapp.com/jpoland0202", timeout=3)
     if not init_response.ok:
         print("API request failed, trying again")
-        # print(init_response.status_code)
     else:
         init_json = init_response.json()
         num_solved = init_json['totalSolved']
