@@ -1,9 +1,11 @@
 import tkinter as tk
 import requests
 from time import sleep
+import winsound
 
-window = tk.Tk()
-window.title("LeetBoost")
+# window = tk.Tk()
+# window.title("LeetBoost")
+
 
 while True:
     init_response = requests.get("https://leetcode-stats-api.herokuapp.com/jpoland0202", timeout=3)
@@ -18,24 +20,30 @@ while True:
         new_num_attempts = num_attempts
 
 
-        while window.winfo_exists():
-            r = requests.get("https://leetcode-stats-api.herokuapp.com/jpoland0202", timeout=3)
-            if not r.ok:
-                print("API request failed")
-                break
-            else:
-                r_json = r.json()
-                new_num_solved = r_json['totalSolved']
-                new_num_attempts = r_json['totalQuestions']
+        # while window.winfo_exists():
+        r = requests.get("https://leetcode-stats-api.herokuapp.com/jpoland0202", timeout=3)
+        if not r.ok:
+            print("API request failed")
+            break
+        else:
+            r_json = r.json()
+            new_num_solved = r_json['totalSolved']
+            new_num_attempts = r_json['totalQuestions']
 
-                if new_num_solved > num_solved:
-                    num_solved = new_num_solved
-                    print("Congrats on completing a problem!")
-                elif new_num_attempts > num_attempts:
-                    num_attempts = new_num_attempts
-                    print("Don't worry, you can do this! Don't give up! Take a deep breath and try again.")
-            print("Everything good, waiting 2 seconds for next request")
-            sleep(2)
+            # testing_input = input("press enter or +")  # remove after testing
+            # if testing_input == "+":
+            #     new_num_solved += 1
+
+            if new_num_solved > num_solved:
+                num_solved = new_num_solved
+                print("Congrats on completing a problem!")
+                winsound.PlaySound("my_ding.wav", winsound.SND_FILENAME)
+            elif new_num_attempts > num_attempts:
+                num_attempts = new_num_attempts
+                print("Don't worry, you can do this! Don't give up! Take a deep breath and try again.")
+
+            # if testing_input == "+":  # remove after testing
+            #     num_solved -= 1
             
-    print("Waiting 10 seconds before trying again")
-    sleep(10)
+    print("Pausing for 3 seconds")
+    sleep(3)
