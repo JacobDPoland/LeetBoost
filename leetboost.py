@@ -3,18 +3,20 @@ import requests
 from time import sleep
 import winsound
 
+leetcode_username = "jpoland0202"
+url = "https://leetcode-stats-api.herokuapp.com/" + leetcode_username
 
 # get first completion count
 timeout = 10  # seconds
 wait_time = 3  # seconds 
 
-init_response = requests.get("https://leetcode-stats-api.herokuapp.com/jpoland0202", timeout=timeout)
+init_response = requests.get(url, timeout=timeout)
 num_solved = 0  # init
 attempts = 0
 while not init_response.ok and (attempts < 5):
     print("API request failed. Trying", 5 - attempts, "more times")
     attempts += 1
-    init_response = requests.get("https://leetcode-stats-api.herokuapp.com/jpoland0202", timeout=timeout)
+    init_response = requests.get(url, timeout=timeout)
 else:
     init_json = init_response.json()
     num_solved = init_json['totalSolved']
@@ -27,7 +29,7 @@ else:
 # continuously check for a new completion
 while True:
     # while window.winfo_exists():
-    r = requests.get("https://leetcode-stats-api.herokuapp.com/jpoland0202", timeout=timeout)
+    r = requests.get(url, timeout=timeout)
     if not r.ok:
         print("API request failed")
     else:
