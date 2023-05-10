@@ -2,6 +2,17 @@ import tkinter as tk
 import requests
 from time import sleep
 import winsound
+import os
+import random
+
+sounds = os.listdir(os.getcwd() + "/sounds")
+print("Available sounds:", sounds)
+
+# function for choosing and playing the sound effect
+def playSound():
+    chosen_sound = random.choice(sounds)
+    winsound.PlaySound("sounds/" + chosen_sound, winsound.SND_FILENAME)
+
 
 leetcode_username = "jpoland0202"
 url = "https://leetcode-stats-api.herokuapp.com/" + leetcode_username
@@ -40,7 +51,7 @@ while True:
         if new_num_solved > num_solved:
             num_solved = new_num_solved
             print("Congrats on completing a problem!")
-            winsound.PlaySound("my_ding.wav", winsound.SND_FILENAME)
+            playSound()
         elif new_num_attempts > num_attempts:
             num_attempts = new_num_attempts
             print("Don't worry, you can do this! Don't give up! Take a deep breath and try again.")
