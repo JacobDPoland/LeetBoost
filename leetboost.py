@@ -25,7 +25,7 @@ init_response = requests.get(url, timeout=timeout)
 num_solved = 0  # init
 attempts = 0
 while not init_response.ok and (attempts < 5):
-    print("API request failed. Trying", 5 - attempts, "more times")
+    print("API request failed. Trying", 5 - attempts, "more times", flush=True)
     attempts += 1
     init_response = requests.get(url, timeout=timeout)
 else:
@@ -56,5 +56,5 @@ while True:
             num_attempts = new_num_attempts
             print("Don't worry, you can do this! Don't give up! Take a deep breath and try again.")
             
-    print(num_solved, "solutions detected. Will check again in", wait_time, "seconds.")
+    print(num_solved, "solutions detected. Will check again in", wait_time, "seconds.", flush=True)
     sleep(wait_time)
