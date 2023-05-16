@@ -1,4 +1,3 @@
-import tkinter as tk
 import requests
 from time import sleep
 import winsound
@@ -19,7 +18,7 @@ url = "https://leetcode-stats-api.herokuapp.com/" + leetcode_username
 
 # get first completion count
 timeout = 10  # seconds
-wait_time = 3  # seconds 
+wait_time = 1.5  # seconds 
 
 init_response = requests.get(url, timeout=timeout)
 num_solved = 0  # init
