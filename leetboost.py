@@ -30,9 +30,6 @@ while not init_response.ok and (attempts < 5):
 
 
 init_json = init_response.json()
-print()
-print()
-print(init_json)
 num_solved = init_json['totalSolved']
 new_num_solved = num_solved
 
