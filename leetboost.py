@@ -27,13 +27,17 @@ while not init_response.ok and (attempts < 5):
     print("API request failed. Trying", 5 - attempts, "more times", flush=True)
     attempts += 1
     init_response = requests.get(url, timeout=timeout)
-else:
-    init_json = init_response.json()
-    num_solved = init_json['totalSolved']
-    new_num_solved = num_solved
 
-    num_attempts = init_json['totalQuestions']
-    new_num_attempts = num_attempts
+
+init_json = init_response.json()
+print()
+print()
+print(init_json)
+num_solved = init_json['totalSolved']
+new_num_solved = num_solved
+
+num_attempts = init_json['totalQuestions']
+new_num_attempts = num_attempts
 
 
 # continuously check for a new completion
@@ -41,7 +45,7 @@ while True:
     # while window.winfo_exists():
     r = requests.get(url, timeout=timeout)
     if not r.ok:
-        print("API request failed")
+        print("API request failed: status code", r.status_code)
     else:
         r_json = r.json()
         new_num_solved = r_json['totalSolved']
@@ -49,7 +53,16 @@ while True:
 
         if new_num_solved > num_solved:
             num_solved = new_num_solved
-            print("Congrats on completing a problem!")
+
+            prompt = """
+            ╔═══╗╔═══╗╔═╗ ╔╗╔═══╗╔═══╗╔═══╗╔════╗╔═══╗
+            ║╔═╗║║╔═╗║║║╚╗║║║╔═╗║║╔═╗║║╔═╗║║╔╗╔╗║║╔═╗║
+            ║║ ╚╝║║ ║║║╔╗╚╝║║║ ╚╝║╚═╝║║║ ║║╚╝║║╚╝║╚══╗
+            ║║ ╔╗║║ ║║║║╚╗║║║║╔═╗║╔╗╔╝║╚═╝║  ║║  ╚══╗║
+            ║╚═╝║║╚═╝║║║ ║║║║╚╩═║║║║╚╗║╔═╗║ ╔╝╚╗ ║╚═╝║
+            ╚═══╝╚═══╝╚╝ ╚═╝╚═══╝╚╝╚═╝╚╝ ╚╝ ╚══╝ ╚═══╝
+            """
+            print(prompt, "\nCongrats on completing a problem!")
             playSound()
         elif new_num_attempts > num_attempts:
             num_attempts = new_num_attempts
